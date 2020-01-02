@@ -20,10 +20,10 @@
 <script src="<?php echo base_url('assets/dist/js/adminlte.min.js')?>"></script>
 <script src="<?php echo base_url('assets/plugins/datatables/jquery.dataTables.min.js') ?>"></script> 
 <!-- DataTables -->
-<script src="<?php echo base_url('assets/plugins/datatables/jquery.dataTables.js"') ?>"></script>
+<!-- <script src="<?php echo base_url('assets/plugins/datatables/jquery.dataTables.js"') ?>"></script> -->
 <script src="<?php echo base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js') ?>"></script>
 
-<!-- page script -->
+<!-- datatable pengawas/kube's script -->
 <script>
   $(function () {
     $("#example1").DataTable();

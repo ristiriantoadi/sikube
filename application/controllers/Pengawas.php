@@ -12,18 +12,33 @@
         public function index(){//this is beranda
             $data['username'] = $this->session->username;
             $data['halaman'] = "beranda";
+            $data['subhalaman']="";
             $this->load->view('templates/header_pengawas',$data);
             $this->load->view('pengawas/beranda',$data);
             $this->load->view('templates/footer');
         }
 
-        public function kube(){
+        public function kube($subhalaman='kelompok'){
             // echo "this is kube page";
             $data['username'] = $this->session->username;
             $data['halaman'] = 'kube';
-            $this->load->view('templates/header_pengawas',$data);
-            $this->load->view('pengawas/kube');
-            $this->load->view('templates/footer');
+            $data['subhalaman'] = $subhalaman;
+            // $this->load->view('templates/header_pengawas',$data);
+            // $this->load->view('pengawas/kube');
+            // $this->load->view('templates/footer');
+            if($subhalaman == 'kelompok'){
+                $this->load->view('templates/header_pengawas',$data);
+                $this->load->view('pengawas/kelompok');
+                $this->load->view('templates/footer');
+            }else if($subhalaman=='operator'){
+                $this->load->view('templates/header_pengawas',$data);
+                $this->load->view('pengawas/operator');
+                $this->load->view('templates/footer');               
+            }else if($subhalaman == 'tambah-kelompok'){
+                $this->load->view('templates/header_pengawas',$data);
+                $this->load->view('pengawas/tambah_kelompok');
+                $this->load->view('templates/footer'); 
+            }
         }
 
         public function penjualan(){

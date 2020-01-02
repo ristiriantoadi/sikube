@@ -99,11 +99,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <p>Beranda</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link <?php echo ($halaman=='kube' ? 'active':'') ?>" href="<?php echo site_url('pengawas/kube') ?>">
+          <li class="nav-item has-treeview">
+            <a class="nav-link <?php echo ($halaman=='kube' ? 'active':'') ?>" href="#">
               <i class="nav-icon fas fa-users"></i>
-              <p>KUBE</p>
+              <p>
+                KUBE
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo site_url('pengawas/kube/kelompok') ?>" class="nav-link <?php echo ($subhalaman=='kelompok'?'active':'') ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Kelompok</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo site_url('pengawas/kube/operator') ?>" class="nav-link <?php echo ($subhalaman=='operator'?'active':'') ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Operator</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo site_url('pengawas/kube/tambah-kelompok') ?>" class="nav-link <?php echo ($subhalaman=='tambah-kelompok'?'active':'') ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tambah Kelompok</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link <?php echo ($halaman=='penjualan' ? 'active':'') ?>" href="<?php echo site_url('pengawas/penjualan') ?>">
