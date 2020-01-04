@@ -1,3 +1,11 @@
+<style>
+  .input-operator{
+    display:none;
+  }
+  #input-operator-1{
+    display:block;
+  }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -100,6 +108,19 @@
                                 <option selected>Anggota</option>
                               </select>
                             </div>
+                            <br>
+                            <div class='form-check'>
+                              <input type='checkbox' class='form-check-input operator-kelompok' id='checkbox-$x'>
+                              <label class='form-check-label' for='exampleCheck1'>Operator Kelompok</label>
+                            </div>
+                            <br>
+                            <div id='input-operator-$x' class='input-operator'>
+                              <div class='form-group'>
+                                <label for='alamat'>Username</label>
+                                <input type='text' class='form-control' id='alamat' placeholder='Masukkan username untuk operator'>
+                              </div>
+                              <p>Password awal sama dengan username</p>
+                            </div>
                           </div>";
                           }
                         ?>
@@ -128,3 +149,35 @@
     </div>
   </aside>
   <!-- /.control-sidebar -->
+  <script>
+    const checkboxes = document.getElementsByClassName("operator-kelompok")
+    for (let checkbox of checkboxes){
+      // console.log(checkbox)
+      checkbox.addEventListener('change', (event) => {
+        var id = checkbox.id 
+        var nomor = id.split('-')[1]
+          // console.log(nomor)
+        var idInputOperator = 'input-operator-'+nomor
+          // console.log(idInputOperator)
+        var div = document.getElementById(idInputOperator)
+        if (event.target.checked) {
+          // alert('checked');
+          // console.log(checkbox.id)
+          
+          // console.log(div)
+          div.style.display="block"
+          for (let checkbox1 of checkboxes){
+            if((checkbox1.id != checkbox.id)){
+              checkbox1.disabled=true
+            }
+          }
+        } else {
+          // alert('not checked');
+          div.style.display="none"
+          for (let checkbox1 of checkboxes){
+            checkbox1.disabled=false
+          }
+        }
+})
+    }
+  </script>
