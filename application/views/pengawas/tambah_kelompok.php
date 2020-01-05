@@ -2,9 +2,6 @@
   .input-operator{
     display:none;
   }
-  #input-operator-1{
-    display:block;
-  }
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -39,15 +36,15 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" method="post" action="<?php echo site_url('pengawas/handleTambahKelompok') ?>">
                       <div class="card-body">
                         <div class="form-group">
                           <label for="namaKelompok">Nama Kelompok</label>
-                          <input type="text" class="form-control" id="namaKelompok" placeholder="Masukkan nama kelompok">
+                          <input type="text" class="form-control" name="nama-kelompok" id="namaKelompok" placeholder="Masukkan nama kelompok">
                         </div>
                         <div class="form-group">
                           <label for="dusun">Dusun</label>
-                          <input type="text" class="form-control" id="dusun" placeholder="Masukkan nama dusun">
+                          <input type="text" class="form-control" id="dusun" name="nama-dusun" placeholder="Masukkan nama dusun">
                         </div>
                         <div class="form-group">
                           <label for="tanggalBerdiri">Tanggal Berdiri</label>
@@ -56,16 +53,16 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                             </div>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="tanggal" >
+                            <input type="date" class="form-control" id="tanggal" name="tanggal-berdiri" placeholder="tanggal" >
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="produk">Produk</label>
-                          <input type="text" class="form-control" id="produk" placeholder="Masukkan nama produk">
+                          <input type="text" class="form-control" id="produk" name="nama-produk" placeholder="Masukkan nama produk">
                         </div>
                         <div class="form-group">
                           <label for="lokasiUsaha">Lokasi Usaha</label>
-                          <input type="text" class="form-control" id="lokasiUsaha" placeholder="Masukkan lokasi usaha">
+                          <input type="text" class="form-control" id="lokasiUsaha" name="lokasi-usaha" placeholder="Masukkan lokasi usaha">
                         </div>
                       </div>
                         <!-- /.card-body -->
@@ -83,11 +80,11 @@
                             <div class='form-group'>
                               <label for='namaLengkap'>Nama Lengkap</label>
                               <input type='text' class='form-control' 
-                              id='namaLengkap' placeholder='Masukkan nama lengkap'>
+                              id='namaLengkap' name='nama-lengkap[]' placeholder='Masukkan nama lengkap'>
                             </div>
                             <div class='form-group'>
                               <label for='alamat'>Alamat</label>
-                              <input type='text' class='form-control' id='alamat' placeholder='Masukkan alamat'>
+                              <input type='text' class='form-control' name='alamat[]' id='alamat' placeholder='Masukkan alamat'>
                             </div>
                             <div class='form-group'>
                               <label for='tanggalLahir'>Tanggal Lahir</label>
@@ -95,13 +92,13 @@
                                 <div class='input-group-prepend'>
                                   <span class='input-group-text'><i class='far fa-calendar-alt'></i></span>
                                 </div>
-                                <input type='date' class='form-control' id='tanggalLahir' name='tanggal'
+                                <input type='date' class='form-control' id='tanggalLahir' name='tanggal-lahir[]'
                                  placeholder='Tanggal lahir' >
                               </div>
                             </div>
                             <div class='form-group>
                               <label for='jabatan'>Jabatan</label>
-                              <select class='form-control'>
+                              <select class='form-control' name='jabatan[]'>
                                 <option>Ketua</option>
                                 <option>Sekretaris</option>
                                 <option>Bendahara</option>
@@ -110,14 +107,14 @@
                             </div>
                             <br>
                             <div class='form-check'>
-                              <input type='checkbox' class='form-check-input operator-kelompok' id='checkbox-$x'>
+                              <input type='checkbox' name='checkbox-operator' class='form-check-input operator-kelompok' id='checkbox-$x'>
                               <label class='form-check-label' for='exampleCheck1'>Operator Kelompok</label>
                             </div>
                             <br>
                             <div id='input-operator-$x' class='input-operator'>
                               <div class='form-group'>
                                 <label for='alamat'>Username</label>
-                                <input type='text' class='form-control' id='alamat' placeholder='Masukkan username untuk operator'>
+                                <input type='text' name='username[]' class='form-control' id='alamat' placeholder='Masukkan username untuk operator'>
                               </div>
                               <p>Password awal sama dengan username</p>
                             </div>

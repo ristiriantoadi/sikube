@@ -41,9 +41,62 @@
             }
         }
 
+        public function handleTambahKelompok(){
+            
+            //parse input post
+            echo "Nama kelompok: ".$this->input->post('nama-kelompok')."<br>";
+            $namaKelompok = $this->input->post('nama-kelompok');
+            echo "Dusun: ".$this->input->post("nama-dusun")."<br>";
+            $namaDusun = $this->input->post("nama-dusun");
+            echo "Tanggal berdiri: ".$this->input->post('tanggal-berdiri')."<br>";
+            $tanggalBerdiri = $this->input->post('tanggal-berdiri');
+            echo "Produk: ".$this->input->post('nama-produk')."<br>";
+            $namaProduk = $this->input->post('nama-produk');
+            echo "Lokasi usaha: ".$this->input->post("lokasi-usaha")."<br>";
+            $lokasiUsaha = $this->input->post("lokasi-usaha");
+            
+
+            //insert data info umum kelompok ke dalam tabel kelompok
+            $query = $this->db->query("SELECT * FROM kelompok desc limit 1")->row();
+            $idKelompok = $query->count+1;
+            exit(); 
+            $this->db->query("INSERT INTO kelompok (id_kelompok,nama,dusun,tanggal_berdiri,produk,lokasi_usaha)
+             VALUES ('$idKelompok','$namaKelompok','$namaDusun','$tanggalBerdiri','$namaProduk','$lokasiUsaha')");
+
+
+            //GET jumlah anggota
+            $query = $this->db->query("SELECT COUNT(*) as count FROM anggota")->row();
+            $id=$query->count+1;
+            for($numAnggota=0;$numAnggota<10;$numAnggota++){
+                echo "Anggota ".($numAnggota+1)."<br>";
+                
+                //parse data
+                echo "Nama Lengkap ".$this->input->post("nama-lengkap")[$numAnggota]."<br>";
+                $namaLengkap = $this->input->post("nama-lengkap")[$numAnggota];
+
+                echo "Alamat ".$this->input->post('alamat')[$numAnggota]."<br>";
+                $alamat = $this->input->post("alamat")[$numAnggota];
+                
+                echo "Tanggal lahir ".$this->input->post("tanggal-lahir")[$numAnggota]."<br>";
+                $tanggalLahir = $this->input->post("tanggal-lahir")[$numAnggota];
+                    
+                echo "Jabatan ".$this->input->post("jabatan")[$numAnggota]."<br>";
+                $jabatan = $this->input->post("jabatan")[$numAnggota];
+                
+                //insert data anggota
+                $idAnggota = $id+$numAnggota;
+                $this->db->query("INSERT INTO anggota (id_anggota,nama_lengkap,alamat,tanggal_lahir,jabatan,id_kelompok)
+             VALUES ('$idAnggota','$namaLengkap','$alamat','$tanggalLahir','$jabatan','$idKelompok')");
+
+
+            }
+            
+        }
+
         public function penjualan(){
             $data['username'] = $this->session->username;
             $data['halaman'] = 'penjualan';
+            $data['subhalaman']='';
             $this->load->view('templates/header_pengawas',$data);
             $this->load->view('pengawas/penjualan');
             $this->load->view('templates/footer');
@@ -52,6 +105,7 @@
         public function anggota(){
             $data['username'] = $this->session->username;
             $data['halaman'] = 'anggota';
+            $data['subhalaman']='';
             $this->load->view('templates/header_pengawas',$data);
             $this->load->view('pengawas/anggota');
             $this->load->view('templates/footer');
