@@ -29,16 +29,12 @@
             if($subhalaman == 'kelompok'){
                 
                 //SELECT data kelompok
-                $query = $this->db->query("SELECT * FROM kelompok")->result();
-                foreach($query as $row){
-                    // echo "Nama: ".$row->nama."<br>";
-                    $data['kelompok']
-                }
-                exit();
-
-
+                $queryResult = $this->db->query("SELECT * FROM kelompok INNER JOIN anggota
+                                WHERE anggota.id_kelompok=kelompok.id_kelompok AND anggota.jabatan='Ketua'")->result();
+                $data['kelompok']=$queryResult;
+                // exit();
                 $this->load->view('templates/header_pengawas',$data);
-                $this->load->view('pengawas/kelompok');
+                $this->load->view('pengawas/kelompok',$data);
                 $this->load->view('templates/footer');
             }else if($subhalaman=='operator'){
                 $this->load->view('templates/header_pengawas',$data);

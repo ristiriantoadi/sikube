@@ -34,66 +34,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>ABCDE</td>
-                <td>Nipah</td>
-                <td>Muzakir</td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-info">Lihat selengkapnya</button>
-                    <button class="btn btn-warning">Sunting</button>
-                    <button class="btn btn-danger">Hapus</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>FGHI</td>
-                <td>Nipah</td>
-                <td>Munadir</td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-info">Lihat selengkapnya</button>
-                    <button class="btn btn-warning">Sunting</button>
-                    <button class="btn btn-danger">Hapus</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>CCC</td>
-                <td>Setangi</td>
-                <td>Rumbia</td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-info">Lihat selengkapnya</button>
-                    <button class="btn btn-warning">Sunting</button>
-                    <button class="btn btn-danger">Hapus</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>FFF</td>
-                <td>Malimbu</td>
-                <td>Rida</td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-info">Lihat selengkapnya</button>
-                    <button class="btn btn-warning">Sunting</button>
-                    <button class="btn btn-danger">Hapus</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>AAA</td>
-                <td>Malimbu</td>
-                <td>Erin</td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-info">Lihat selengkapnya</button>
-                    <button class="btn btn-warning">Sunting</button>
-                    <button class="btn btn-danger">Hapus</button>
-                  </div>
-                </td>
-              </tr>
+            <?php 
+              foreach($kelompok as $rowKelompok){
+                echo "<tr>
+                        <td>$rowKelompok->nama</td>
+                        <td>$rowKelompok->dusun</td>
+                        <td>$rowKelompok->nama_lengkap</td>
+                        <td>
+                          <div class='btn-group'>
+                            <button class='btn btn-info'>Lihat selengkapnya</button>
+                            <button class='btn btn-warning'>Sunting</button>
+                            <button class='btn btn-danger'>Hapus</button>
+                          </div>
+                        </td>
+                      </tr>";
+              }
+            ?>
+              
             </tbody>
           </table>
         </div>
