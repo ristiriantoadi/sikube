@@ -107,7 +107,7 @@
                             </div>
                             <br>
                             <div class='form-check'>
-                              <input type='checkbox' name='checkbox-operator' class='form-check-input operator-kelompok' id='checkbox-$x'>
+                              <input type='checkbox' name='checkbox-operator[]' class='form-check-input operator-kelompok' id='checkbox-$x'>
                               <label class='form-check-label' for='exampleCheck1'>Operator Kelompok</label>
                             </div>
                             <br>

@@ -22,7 +22,36 @@
     <!-- Main content --> 
     <div class="content">
       <!-- <p>Lorem ipsum dolor sit amet</p> -->
-      <p>Ini halaman data operator</p>
+      <div class="row">
+        <div class="col-12">
+          <table id="example1" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Nama Operator</th>
+                <th>Nama Kelompok</th>
+                <!-- <th></th> -->
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php 
+              foreach($operator as $rowOperator){
+                echo "<tr>
+                        <td>$rowOperator->nama_lengkap</td>
+                        <td>$rowOperator->nama</td>
+                        <td>
+                          <div class='btn-group'>
+                            <button class='btn btn-info'>Lihat selengkapnya</button>
+                            <button class='btn btn-danger'>Hapus</button>
+                          </div>
+                        </td>
+                      </tr>";
+              }
+            ?>  
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <!-- /.content -->
 </div>

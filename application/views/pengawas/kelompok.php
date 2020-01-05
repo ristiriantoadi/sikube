@@ -42,7 +42,7 @@
                         <td>$rowKelompok->nama_lengkap</td>
                         <td>
                           <div class='btn-group'>
-                            <button class='btn btn-info'>Lihat selengkapnya</button>
+                            <a class='btn btn-info' href='".site_url('pengawas/kube/detail-kelompok/'.$rowKelompok->id_kelompok)."'>Lihat selengkapnya</a>
                             <button class='btn btn-warning'>Sunting</button>
                             <button class='btn btn-danger'>Hapus</button>
                           </div>

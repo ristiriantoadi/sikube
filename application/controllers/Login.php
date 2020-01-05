@@ -36,27 +36,44 @@
             echo $username;
             echo $password;
 
-            $query = $this->db->query("SELECT * FROM user_login 
+            $query = $this->db->query("SELECT * FROM pengawas 
             WHERE username='$username' AND password='$password'")->row();
             // print($query);
-            
             if(isset($query)){
-                //go to login
+                //     //go to login
                 // $this->session->username=$username;
                 $_SESSION['username'] = $username;
-                $_SESSION['status'] = $query->status;
-                if($query->status == 'pengawas'){
-                    //go to pengawas
-                    // echo "go to pengawas";
-                    // $this->session['username']=$username;
-                    redirect(site_url('pengawas/'));
-                }else if($query->status == 'operator'){
-                    echo "go to operator";
-                    redirect(site_url('operator/'));
-                }
+                $_SESSION['status'] = 'pengawas';
+                redirect(site_url('pengawas/'));
             }else{
-                echo "login failed";
+                $query = $this->db->query("SELECT * FROM operator 
+                        WHERE username='$username' AND password='$password'")->row();
+                if(isset($query)){
+                    $_SESSION['username'] = $username;
+                    $_SESSION['status'] = 'operator';
+                    redirect(site_url('operator/'));
+                }else{
+                    echo "login gagal";
+                }
             }
+            
+            // if(isset($query)){
+            //     //go to login
+            //     // $this->session->username=$username;
+            //     $_SESSION['username'] = $username;
+            //     $_SESSION['status'] = $query->status;
+            //     if($query->status == 'pengawas'){
+            //         //go to pengawas
+            //         // echo "go to pengawas";
+            //         // $this->session['username']=$username;
+            //         redirect(site_url('pengawas/'));
+            //     }else if($query->status == 'operator'){
+            //         echo "go to operator";
+            //         redirect(site_url('operator/'));
+            //     }
+            // }else{
+            //     echo "login failed";
+            // }
 
         }
 

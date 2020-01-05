@@ -18,7 +18,7 @@
             $this->load->view('templates/footer');
         }
 
-        public function kube($subhalaman='kelompok'){
+        public function kube($subhalaman='kelompok',$idKelompok=0){
             // echo "this is kube page";
             $data['username'] = $this->session->username;
             $data['halaman'] = 'kube';
@@ -37,13 +37,51 @@
                 $this->load->view('pengawas/kelompok',$data);
                 $this->load->view('templates/footer');
             }else if($subhalaman=='operator'){
+                $queryResult = $this->db->query("SELECT * FROM operator INNER JOIN anggota INNER JOIN kelompok
+                                WHERE anggota.id_anggota=operator.id_anggota 
+                                AND kelompok.id_kelompok=operator.id_kelompok")->result();
+                $data['operator']=$queryResult;
                 $this->load->view('templates/header_pengawas',$data);
-                $this->load->view('pengawas/operator');
+                $this->load->view('pengawas/operator',$data);
                 $this->load->view('templates/footer');               
             }else if($subhalaman == 'tambah-kelompok'){
                 $this->load->view('templates/header_pengawas',$data);
                 $this->load->view('pengawas/tambah_kelompok');
                 $this->load->view('templates/footer'); 
+            }else if($subhalaman == 'detail-kelompok'){
+                $data['idKelompok']=$idKelompok;
+                
+                //get data info umum kelompok
+                $queryResult = $this->db->query("SELECT * FROM kelompok WHERE id_kelompok=$idKelompok")->row();
+                $data['detailKelompok']=$queryResult;
+
+                //get data ketua,sekretaris,bendahara
+
+                //get data ketua
+                $queryResult = $this->db->query("SELECT * FROM anggota WHERE id_kelompok=$idKelompok
+                AND jabatan='Ketua'")->row();
+                $data['namaKetua']=$queryResult->nama_lengkap;
+ 
+                //get data sekretaris
+                $queryResult = $this->db->query("SELECT * FROM anggota WHERE id_kelompok=$idKelompok
+                AND jabatan='Sekretaris'")->row();
+                $data['namaSekretaris']=$queryResult->nama_lengkap;
+
+                //get data bendahara
+                $queryResult = $this->db->query("SELECT * FROM anggota WHERE id_kelompok=$idKelompok
+                AND jabatan='Bendahara'")->row();
+                if(isset($queryResult))
+                    $data['namaBendahara']=$queryResult->nama_lengkap;
+                else $data['namaBendahara']='';
+ 
+
+                //get data anggota
+                $queryResult = $this->db->query("SELECT * FROM anggota WHERE id_kelompok=$idKelompok")->result();
+                $data['anggota']=$queryResult;
+
+                $this->load->view('templates/header_pengawas',$data);
+                $this->load->view('pengawas/detail_kelompok',$data);
+                $this->load->view('templates/footer');
             }
         }
 
@@ -65,16 +103,20 @@
             
             //insert data info umum kelompok ke dalam tabel kelompok
             $query = $this->db->query("SELECT * FROM kelompok ORDER BY id_kelompok desc limit 1")->row();
-            $idKelompok = $query->id_kelompok+1;
+            if(!empty($query))
+                $idKelompok = $query->id_kelompok+1;
+            else $idKelompok=1;
             // echo $idKelompok;
             // exit(); 
             if($this->db->query("INSERT INTO kelompok (id_kelompok,nama,dusun,tanggal_berdiri,produk,lokasi_usaha)
              VALUES ('$idKelompok','$namaKelompok','$namaDusun','$tanggalBerdiri','$namaProduk','$lokasiUsaha')")){
-                
                 echo "Sukses tambah kelompok dengan id ".$idKelompok."<br>";
+
                 //GET jumlah anggota
                 $query = $this->db->query("SELECT * FROM anggota ORDER BY id_anggota desc limit 1")->row();
-                $id=$query->id_anggota+1;
+                if(!empty($query))
+                    $id=$query->id_anggota+1;
+                else $id=1;
                 for($numAnggota=0;$numAnggota<10;$numAnggota++){
                     echo "Anggota ".($numAnggota+1)."<br>";
                 
@@ -96,12 +138,36 @@
                     if($this->db->query("INSERT INTO anggota (id_anggota,nama_lengkap,alamat,tanggal_lahir,jabatan,id_kelompok)
                     VALUES ('$idAnggota','$namaLengkap','$alamat','$tanggalLahir','$jabatan','$idKelompok')")){
                         echo "Sukses tambah anggota dengan id ".$idAnggota."<br>";
+                        if(!empty($this->input->post("username")[$numAnggota])){
+                            
+                            //Insert data operator
+                            $username = $this->input->post("username")[$numAnggota];
+                            $password = $username;
+                            $query = $this->db->query("SELECT * FROM operator ORDER BY id_operator desc limit 1")->row();            
+                            if(!empty($query)){
+                                $idOperator = $query->id_operator+1;
+                            }else $idOperator =1;
+                            
+                            if($this->db->query("INSERT INTO 
+                            operator (id_operator,id_anggota,id_kelompok,username,password) 
+                            VALUES ('$idOperator','$idAnggota','$idKelompok','$username','$password')")){
+                                echo "Sukses tambah operator dengan id ".$idOperator."<br>";
+                                // redirect(site_url('pengawas/kube/kelompok'));
+                            }else{
+                                echo "Gagal tambah operator dengan id ".$idOperator."<br>";
+                                // exit();
+                            }
+                        }
                     }else{
                         echo "Gagal tambah anggota dengan id ".$idAnggota."<br>";
+                        // exit();
                     }
                 }
+                redirect(site_url('pengawas/kube/kelompok'));
+                // exit();
             }else{
                 echo "Gagal tambah kelompok dengan id ".$idKelompok."<br>";
+                // exit();
             }
 
             
