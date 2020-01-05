@@ -27,6 +27,16 @@
             // $this->load->view('pengawas/kube');
             // $this->load->view('templates/footer');
             if($subhalaman == 'kelompok'){
+                
+                //SELECT data kelompok
+                $query = $this->db->query("SELECT * FROM kelompok")->result();
+                foreach($query as $row){
+                    // echo "Nama: ".$row->nama."<br>";
+                    $data['kelompok']
+                }
+                exit();
+
+
                 $this->load->view('templates/header_pengawas',$data);
                 $this->load->view('pengawas/kelompok');
                 $this->load->view('templates/footer');
@@ -56,40 +66,49 @@
             $lokasiUsaha = $this->input->post("lokasi-usaha");
             
 
+            
             //insert data info umum kelompok ke dalam tabel kelompok
-            $query = $this->db->query("SELECT * FROM kelompok desc limit 1")->row();
-            $idKelompok = $query->count+1;
-            exit(); 
-            $this->db->query("INSERT INTO kelompok (id_kelompok,nama,dusun,tanggal_berdiri,produk,lokasi_usaha)
-             VALUES ('$idKelompok','$namaKelompok','$namaDusun','$tanggalBerdiri','$namaProduk','$lokasiUsaha')");
-
-
-            //GET jumlah anggota
-            $query = $this->db->query("SELECT COUNT(*) as count FROM anggota")->row();
-            $id=$query->count+1;
-            for($numAnggota=0;$numAnggota<10;$numAnggota++){
-                echo "Anggota ".($numAnggota+1)."<br>";
+            $query = $this->db->query("SELECT * FROM kelompok ORDER BY id_kelompok desc limit 1")->row();
+            $idKelompok = $query->id_kelompok+1;
+            // echo $idKelompok;
+            // exit(); 
+            if($this->db->query("INSERT INTO kelompok (id_kelompok,nama,dusun,tanggal_berdiri,produk,lokasi_usaha)
+             VALUES ('$idKelompok','$namaKelompok','$namaDusun','$tanggalBerdiri','$namaProduk','$lokasiUsaha')")){
                 
-                //parse data
-                echo "Nama Lengkap ".$this->input->post("nama-lengkap")[$numAnggota]."<br>";
-                $namaLengkap = $this->input->post("nama-lengkap")[$numAnggota];
-
-                echo "Alamat ".$this->input->post('alamat')[$numAnggota]."<br>";
-                $alamat = $this->input->post("alamat")[$numAnggota];
+                echo "Sukses tambah kelompok dengan id ".$idKelompok."<br>";
+                //GET jumlah anggota
+                $query = $this->db->query("SELECT * FROM anggota ORDER BY id_anggota desc limit 1")->row();
+                $id=$query->id_anggota+1;
+                for($numAnggota=0;$numAnggota<10;$numAnggota++){
+                    echo "Anggota ".($numAnggota+1)."<br>";
                 
-                echo "Tanggal lahir ".$this->input->post("tanggal-lahir")[$numAnggota]."<br>";
-                $tanggalLahir = $this->input->post("tanggal-lahir")[$numAnggota];
+                    //parse data
+                    echo "Nama Lengkap ".$this->input->post("nama-lengkap")[$numAnggota]."<br>";
+                    $namaLengkap = $this->input->post("nama-lengkap")[$numAnggota];
+
+                    echo "Alamat ".$this->input->post('alamat')[$numAnggota]."<br>";
+                    $alamat = $this->input->post("alamat")[$numAnggota];
                     
-                echo "Jabatan ".$this->input->post("jabatan")[$numAnggota]."<br>";
-                $jabatan = $this->input->post("jabatan")[$numAnggota];
+                    echo "Tanggal lahir ".$this->input->post("tanggal-lahir")[$numAnggota]."<br>";
+                    $tanggalLahir = $this->input->post("tanggal-lahir")[$numAnggota];
+                        
+                    echo "Jabatan ".$this->input->post("jabatan")[$numAnggota]."<br>";
+                    $jabatan = $this->input->post("jabatan")[$numAnggota];
                 
-                //insert data anggota
-                $idAnggota = $id+$numAnggota;
-                $this->db->query("INSERT INTO anggota (id_anggota,nama_lengkap,alamat,tanggal_lahir,jabatan,id_kelompok)
-             VALUES ('$idAnggota','$namaLengkap','$alamat','$tanggalLahir','$jabatan','$idKelompok')");
-
-
+                    //insert data anggota
+                    $idAnggota = $id+$numAnggota;
+                    if($this->db->query("INSERT INTO anggota (id_anggota,nama_lengkap,alamat,tanggal_lahir,jabatan,id_kelompok)
+                    VALUES ('$idAnggota','$namaLengkap','$alamat','$tanggalLahir','$jabatan','$idKelompok')")){
+                        echo "Sukses tambah anggota dengan id ".$idAnggota."<br>";
+                    }else{
+                        echo "Gagal tambah anggota dengan id ".$idAnggota."<br>";
+                    }
+                }
+            }else{
+                echo "Gagal tambah kelompok dengan id ".$idKelompok."<br>";
             }
+
+            
             
         }
 
